@@ -30,14 +30,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Impact
-  * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="index-page supplier-home">
@@ -245,7 +237,7 @@
                 <li>Suitable for homes and institutions</li>
                 <li>Delivery timing can be coordinated by phone</li>
               </ul>
-              <a href="#contact" class="price-action">Book rental</a>
+              <a href="#contact" class="price-action" data-service-choice="Rent dead body freezer">Book rental</a>
             </article>
           </div>
 
@@ -260,7 +252,7 @@
                 <li>Own the freezer completely</li>
                 <li>Ask for availability before confirming</li>
               </ul>
-              <a href="#contact" class="price-action">Ask to purchase</a>
+              <a href="#contact" class="price-action" data-service-choice="Purchase dead body freezer">Ask to purchase</a>
             </article>
           </div>
 
@@ -467,7 +459,7 @@
 
       <div class="container section-title" data-aos="fade-up">
         <h2>Book Or Purchase</h2>
-        <p>Send your requirement or call directly for urgent freezer availability.</p>
+        <p>Send your order by WhatsApp or email, or call directly for urgent freezer availability.</p>
       </div>
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -510,7 +502,7 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form quote-form" data-aos="fade" data-aos-delay="100">
+            <form action="forms/contact.php" method="post" class="php-email-form quote-form order-form" data-order-form data-aos="fade" data-aos-delay="100">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -518,15 +510,15 @@
                 </div>
 
                 <div class="col-md-6">
-                  <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                  <input type="tel" class="form-control" name="phone" placeholder="Phone or WhatsApp Number" required>
                 </div>
 
                 <div class="col-md-6">
-                  <input type="text" class="form-control" name="phone" placeholder="Phone or WhatsApp Number">
+                  <input type="email" class="form-control" name="email" placeholder="Email Address">
                 </div>
 
                 <div class="col-md-6">
-                  <select name="product" class="form-control" aria-label="Service type">
+                  <select name="product" class="form-control" aria-label="Service type" required>
                     <option value="">Service Type</option>
                     <option value="Rent dead body freezer">Rent dead body freezer - NPR 5,000/day</option>
                     <option value="Purchase dead body freezer">Purchase dead body freezer - NPR 375,000</option>
@@ -535,22 +527,45 @@
                   </select>
                 </div>
 
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" name="location" placeholder="Delivery / Handover Location" required>
+                </div>
+
+                <div class="col-md-6">
+                  <select name="urgency" class="form-control" aria-label="Urgency" required>
+                    <option value="">Urgency</option>
+                    <option value="Urgent - today">Urgent - today</option>
+                    <option value="Within 24 hours">Within 24 hours</option>
+                    <option value="Planned booking">Planned booking</option>
+                    <option value="Just checking availability">Just checking availability</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <input type="date" class="form-control" name="rental_start" aria-label="Required date">
+                </div>
+
+                <div class="col-md-6">
+                  <input type="number" class="form-control" name="rental_days" min="1" step="1" placeholder="Rental Days, if renting">
                 </div>
 
                 <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="8" placeholder="Location, rental dates or purchase request, and urgency" required></textarea>
+                  <textarea class="form-control" name="message" rows="6" placeholder="Extra details, preferred timing, landmark, or purchase notes"></textarea>
+                  <input type="hidden" name="subject" value="Website freezer order request">
                 </div>
 
                 <div class="col-md-12 text-center">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your request has been sent. Thank you.</div>
+                  <div class="sent-message">Your order message is ready. Please press send in WhatsApp or email to complete the request.</div>
 
                   <button type="submit" class="d-inline-flex align-items-center">
-                    <i class="bi bi-send me-2" aria-hidden="true"></i>
-                    <span>Send Request</span>
+                    <i class="bi bi-whatsapp me-2" aria-hidden="true"></i>
+                    <span>Send by WhatsApp</span>
+                  </button>
+                  <button type="button" class="order-email-button d-inline-flex align-items-center" data-order-email>
+                    <i class="bi bi-envelope me-2" aria-hidden="true"></i>
+                    <span>Send by Email</span>
                   </button>
                 </div>
 
@@ -618,9 +633,6 @@
 
     <div class="container copyright text-center mt-4">
       <p>&copy; <span>Copyright</span> <strong class="px-1 sitename">Manakamana Garga Suppliers</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed with the Impact template by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
     </div>
 
   </footer>
@@ -633,7 +645,6 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>

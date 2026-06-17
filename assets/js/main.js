@@ -1,11 +1,3 @@
-/**
-* Template Name: Impact
-* Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 (function() {
   "use strict";
 
@@ -214,5 +206,147 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  /**
+   * Order form WhatsApp and email actions.
+   */
+  const orderForm = document.querySelector('[data-order-form]');
+
+  if (orderForm) {
+    const businessWhatsAppNumber = '9779855061374';
+    const businessEmail = 'sales@manakamanagargasuppliers.com.np';
+    const servicePrices = {
+      'Rent dead body freezer': 'NPR 5,000 per day',
+      'Purchase dead body freezer': 'NPR 375,000',
+      'Urgent availability check': 'Price to be confirmed',
+      'Delivery coordination': 'Price to be confirmed'
+    };
+    const serviceSelect = orderForm.querySelector('[name="product"]');
+    const subjectInput = orderForm.querySelector('[name="subject"]');
+    const errorMessage = orderForm.querySelector('.error-message');
+    const sentMessage = orderForm.querySelector('.sent-message');
+    const emailButton = orderForm.querySelector('[data-order-email]');
+
+    const getFieldValue = (name) => {
+      const field = orderForm.querySelector(`[name="${name}"]`);
+      return field ? field.value.trim() : '';
+    };
+
+    const getSelectedText = (name) => {
+      const field = orderForm.querySelector(`[name="${name}"]`);
+      if (!field || field.selectedIndex < 0) return '';
+      return field.options[field.selectedIndex].text.trim();
+    };
+
+    const setSubject = () => {
+      const service = getFieldValue('product');
+      const subjectService = service || 'Freezer';
+      if (subjectInput) {
+        subjectInput.value = `${subjectService} order request`;
+      }
+    };
+
+    const displayOrderMessage = (type, message) => {
+      if (!errorMessage || !sentMessage) return;
+      errorMessage.classList.remove('d-block');
+      sentMessage.classList.remove('d-block');
+
+      const messageTarget = type === 'error' ? errorMessage : sentMessage;
+      messageTarget.textContent = message;
+      messageTarget.classList.add('d-block');
+    };
+
+    const validateOrder = () => {
+      if (!orderForm.reportValidity()) {
+        return false;
+      }
+
+      if (!getFieldValue('phone') && !getFieldValue('email')) {
+        displayOrderMessage('error', 'Please add a phone number, WhatsApp number, or email address.');
+        return false;
+      }
+
+      return true;
+    };
+
+    const buildOrderText = () => {
+      const service = getFieldValue('product');
+      const serviceText = getSelectedText('product') || service || 'Not selected';
+      const price = servicePrices[service] || 'To be confirmed';
+      const rentalStart = getFieldValue('rental_start') || 'Not provided';
+      const rentalDays = getFieldValue('rental_days') || 'Not provided';
+      const email = getFieldValue('email') || 'Not provided';
+      const extraDetails = getFieldValue('message') || 'None';
+
+      return [
+        'NEW FREEZER ORDER REQUEST',
+        '',
+        'SERVICE DETAILS',
+        `Service        : ${serviceText}`,
+        `Expected price : ${price}`,
+        '',
+        'CUSTOMER DETAILS',
+        `Name           : ${getFieldValue('name')}`,
+        `Phone/WhatsApp : ${getFieldValue('phone')}`,
+        `Email          : ${email}`,
+        '',
+        'DELIVERY DETAILS',
+        `Location       : ${getFieldValue('location')}`,
+        `Urgency        : ${getFieldValue('urgency')}`,
+        `Required date  : ${rentalStart}`,
+        `Rental days    : ${rentalDays}`,
+        '',
+        'EXTRA DETAILS',
+        extraDetails
+      ].join('\n');
+    };
+
+    const openWhatsAppOrder = () => {
+      const orderText = encodeURIComponent(buildOrderText());
+      const url = `https://wa.me/${businessWhatsAppNumber}?text=${orderText}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+      displayOrderMessage('success', 'WhatsApp opened with your order details. Please press send in WhatsApp to complete the request.');
+    };
+
+    const openEmailOrder = () => {
+      const subject = encodeURIComponent(subjectInput ? subjectInput.value : 'Website freezer order request');
+      const body = encodeURIComponent(buildOrderText());
+      window.location.href = `mailto:${businessEmail}?subject=${subject}&body=${body}`;
+      displayOrderMessage('success', 'Your email app opened with the order details. Please press send to complete the request.');
+    };
+
+    setSubject();
+
+    if (serviceSelect) {
+      serviceSelect.addEventListener('change', setSubject);
+    }
+
+    document.querySelectorAll('[data-service-choice]').forEach((choiceLink) => {
+      choiceLink.addEventListener('click', () => {
+        const service = choiceLink.getAttribute('data-service-choice');
+        if (serviceSelect && service) {
+          serviceSelect.value = service;
+          setSubject();
+        }
+      });
+    });
+
+    orderForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      setSubject();
+      if (validateOrder()) {
+        openWhatsAppOrder();
+      }
+    });
+
+    if (emailButton) {
+      emailButton.addEventListener('click', () => {
+        setSubject();
+        if (validateOrder()) {
+          openEmailOrder();
+        }
+      });
+    }
+  }
 
 })();

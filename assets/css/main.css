@@ -1,14 +1,5 @@
-/**
-* Template Name: Impact
-* Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 /*--------------------------------------------------------------
 # Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
@@ -1961,6 +1952,10 @@ section,
 
 .contact .php-email-form input[type=text],
 .contact .php-email-form input[type=email],
+.contact .php-email-form input[type=tel],
+.contact .php-email-form input[type=date],
+.contact .php-email-form input[type=number],
+.contact .php-email-form select,
 .contact .php-email-form textarea {
   font-size: 14px;
   padding: 10px 15px;
@@ -1973,26 +1968,35 @@ section,
 
 .contact .php-email-form input[type=text]:focus,
 .contact .php-email-form input[type=email]:focus,
+.contact .php-email-form input[type=tel]:focus,
+.contact .php-email-form input[type=date]:focus,
+.contact .php-email-form input[type=number]:focus,
+.contact .php-email-form select:focus,
 .contact .php-email-form textarea:focus {
   border-color: var(--accent-color);
 }
 
 .contact .php-email-form input[type=text]::placeholder,
 .contact .php-email-form input[type=email]::placeholder,
+.contact .php-email-form input[type=tel]::placeholder,
+.contact .php-email-form input[type=number]::placeholder,
 .contact .php-email-form textarea::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type=submit],
+.contact .php-email-form button[type=button] {
   color: var(--contrast-color);
   background: var(--accent-color);
   border: 0;
   padding: 10px 30px;
   transition: 0.4s;
   border-radius: 50px;
+  margin: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type=submit]:hover,
+.contact .php-email-form button[type=button]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
@@ -3361,6 +3365,9 @@ section,
 
 .supplier-home .contact .php-email-form input[type=text],
 .supplier-home .contact .php-email-form input[type=email],
+.supplier-home .contact .php-email-form input[type=tel],
+.supplier-home .contact .php-email-form input[type=date],
+.supplier-home .contact .php-email-form input[type=number],
 .supplier-home .contact .php-email-form select,
 .supplier-home .contact .php-email-form textarea {
   min-height: 46px;
@@ -3374,10 +3381,19 @@ section,
   padding: 10px 15px;
 }
 
-.supplier-home .contact .php-email-form button[type=submit] {
+.supplier-home .contact .php-email-form button[type=submit],
+.supplier-home .contact .php-email-form button[type=button] {
   min-height: 46px;
   padding: 12px 28px;
   font-weight: 700;
+}
+
+.supplier-home .contact .php-email-form .order-email-button {
+  background: var(--heading-color);
+}
+
+.supplier-home .contact .php-email-form .order-email-button:hover {
+  background: color-mix(in srgb, var(--heading-color), transparent 18%);
 }
 
 .supplier-home .footer .footer-about .logo {

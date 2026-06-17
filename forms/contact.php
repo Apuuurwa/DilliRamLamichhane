@@ -45,6 +45,17 @@ function csv_safe($value) {
   return $value;
 }
 
+function service_price($product) {
+  $prices = [
+    'Rent dead body freezer' => 'NPR 5,000 per day',
+    'Purchase dead body freezer' => 'NPR 375,000',
+    'Urgent availability check' => 'Price to be confirmed',
+    'Delivery coordination' => 'Price to be confirmed'
+  ];
+
+  return $prices[$product] ?? 'To be confirmed';
+}
+
 function save_submission($submission) {
   $storage_dir = __DIR__ . DIRECTORY_SEPARATOR . 'submissions';
 
@@ -84,23 +95,36 @@ function save_submission($submission) {
 function send_email($to, $from, $site_name, $submission) {
   $subject = 'Website request: ' . $submission['subject'];
 
-  $body = "New contact form submission\n\n";
-  $body .= "Submitted at: " . $submission['submitted_at'] . "\n";
-  $body .= "Name: " . $submission['name'] . "\n";
-  $body .= "Email: " . $submission['email'] . "\n";
-  $body .= "Phone: " . ($submission['phone'] !== '' ? $submission['phone'] : 'Not provided') . "\n";
-  $body .= "Service type: " . ($submission['product'] !== '' ? $submission['product'] : 'Not selected') . "\n";
-  $body .= "Subject: " . $submission['subject'] . "\n\n";
-  $body .= "Message:\n" . $submission['message'] . "\n\n";
-  $body .= "IP address: " . $submission['ip_address'] . "\n";
+  $body = "NEW FREEZER ORDER REQUEST\n\n";
+  $body .= "SERVICE DETAILS\n";
+  $body .= "Service        : " . ($submission['product'] !== '' ? $submission['product'] : 'Not selected') . "\n";
+  $body .= "Expected price : " . service_price($submission['product']) . "\n\n";
+  $body .= "CUSTOMER DETAILS\n";
+  $body .= "Name           : " . $submission['name'] . "\n";
+  $body .= "Phone/WhatsApp : " . ($submission['phone'] !== '' ? $submission['phone'] : 'Not provided') . "\n";
+  $body .= "Email          : " . ($submission['email'] !== '' ? $submission['email'] : 'Not provided') . "\n\n";
+  $body .= "DELIVERY DETAILS\n";
+  $body .= "Location       : " . $submission['location'] . "\n";
+  $body .= "Urgency        : " . $submission['urgency'] . "\n";
+  $body .= "Required date  : " . ($submission['rental_start'] !== '' ? $submission['rental_start'] : 'Not provided') . "\n";
+  $body .= "Rental days    : " . ($submission['rental_days'] !== '' ? $submission['rental_days'] : 'Not provided') . "\n\n";
+  $body .= "EXTRA DETAILS\n";
+  $body .= ($submission['message'] !== '' ? $submission['message'] : 'None') . "\n\n";
+  $body .= "ADMIN DETAILS\n";
+  $body .= "Submitted at   : " . $submission['submitted_at'] . "\n";
+  $body .= "Subject        : " . $submission['subject'] . "\n";
+  $body .= "IP address     : " . $submission['ip_address'] . "\n";
 
   $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
     'From: ' . $site_name . ' <' . $from . '>',
-    'Reply-To: ' . $submission['name'] . ' <' . $submission['email'] . '>',
     'X-Mailer: PHP/' . phpversion()
   ];
+
+  if ($submission['email'] !== '') {
+    $headers[] = 'Reply-To: ' . $submission['name'] . ' <' . $submission['email'] . '>';
+  }
 
   return @mail($to, $subject, $body, implode("\r\n", $headers));
 }
@@ -114,18 +138,26 @@ $name = clean_text(post_text('name'));
 $email = clean_text(post_text('email'));
 $phone = clean_text(post_text('phone'));
 $product = clean_text(post_text('product'));
+$location = clean_text(post_text('location'));
+$urgency = clean_text(post_text('urgency'));
+$rental_start = clean_text(post_text('rental_start'));
+$rental_days = clean_text(post_text('rental_days'));
 $subject = clean_text(post_text('subject'));
 $message = clean_text(post_text('message'), false);
 
-if ($name === '' || $email === '' || $subject === '' || $message === '') {
-  respond(200, 'Please fill in your name, email, subject, and message.');
+if ($subject === '') {
+  $subject = ($product !== '' ? $product : 'Freezer') . ' order request';
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if ($name === '' || $phone === '' || $product === '' || $location === '' || $urgency === '') {
+  respond(200, 'Please fill in your name, phone, service type, location, and urgency.');
+}
+
+if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
   respond(200, 'Please enter a valid email address.');
 }
 
-if (strlen($name) > 100 || strlen($email) > 200 || strlen($phone) > 60 || strlen($product) > 120 || strlen($subject) > 160 || strlen($message) > 3000) {
+if (strlen($name) > 100 || strlen($email) > 200 || strlen($phone) > 60 || strlen($product) > 120 || strlen($location) > 180 || strlen($urgency) > 80 || strlen($rental_start) > 40 || strlen($rental_days) > 20 || strlen($subject) > 160 || strlen($message) > 3000) {
   respond(200, 'One or more fields are too long.');
 }
 
@@ -135,6 +167,10 @@ $submission = [
   'email' => $email,
   'phone' => $phone,
   'product' => $product,
+  'location' => $location,
+  'urgency' => $urgency,
+  'rental_start' => $rental_start,
+  'rental_days' => $rental_days,
   'subject' => $subject,
   'message' => $message,
   'ip_address' => $_SERVER['REMOTE_ADDR'] ?? '',
