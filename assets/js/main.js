@@ -82,6 +82,21 @@
   document.addEventListener('scroll', toggleScrollTop);
 
   /**
+   * Customer journey progress indicator.
+   */
+  const scrollProgress = document.querySelector('[data-scroll-progress]');
+
+  function updateScrollProgress() {
+    if (!scrollProgress) return;
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+    scrollProgress.style.width = `${Math.min(progress, 100)}%`;
+  }
+
+  window.addEventListener('load', updateScrollProgress);
+  document.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+  /**
    * Animation on scroll function and init
    */
   function aosInit() {
@@ -208,13 +223,12 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
   /**
-   * Order form WhatsApp and email actions.
+   * Order form WhatsApp action.
    */
   const orderForm = document.querySelector('[data-order-form]');
 
   if (orderForm) {
     const businessWhatsAppNumber = '9779855061374';
-    const businessEmail = 'sales@manakamanagargasuppliers.com.np';
     const servicePrices = {
       'Rent dead body freezer': 'NPR 5,000 per day',
       'Purchase dead body freezer': 'NPR 375,000',
@@ -222,10 +236,8 @@
       'Delivery coordination': 'Price to be confirmed'
     };
     const serviceSelect = orderForm.querySelector('[name="product"]');
-    const subjectInput = orderForm.querySelector('[name="subject"]');
     const errorMessage = orderForm.querySelector('.error-message');
     const sentMessage = orderForm.querySelector('.sent-message');
-    const emailButton = orderForm.querySelector('[data-order-email]');
 
     const getFieldValue = (name) => {
       const field = orderForm.querySelector(`[name="${name}"]`);
@@ -236,14 +248,6 @@
       const field = orderForm.querySelector(`[name="${name}"]`);
       if (!field || field.selectedIndex < 0) return '';
       return field.options[field.selectedIndex].text.trim();
-    };
-
-    const setSubject = () => {
-      const service = getFieldValue('product');
-      const subjectService = service || 'Freezer';
-      if (subjectInput) {
-        subjectInput.value = `${subjectService} order request`;
-      }
     };
 
     const displayOrderMessage = (type, message) => {
@@ -260,12 +264,6 @@
       if (!orderForm.reportValidity()) {
         return false;
       }
-
-      if (!getFieldValue('phone') && !getFieldValue('email')) {
-        displayOrderMessage('error', 'Please add a phone number, WhatsApp number, or email address.');
-        return false;
-      }
-
       return true;
     };
 
@@ -308,45 +306,21 @@
       displayOrderMessage('success', 'WhatsApp opened with your order details. Please press send in WhatsApp to complete the request.');
     };
 
-    const openEmailOrder = () => {
-      const subject = encodeURIComponent(subjectInput ? subjectInput.value : 'Website freezer order request');
-      const body = encodeURIComponent(buildOrderText());
-      window.location.href = `mailto:${businessEmail}?subject=${subject}&body=${body}`;
-      displayOrderMessage('success', 'Your email app opened with the order details. Please press send to complete the request.');
-    };
-
-    setSubject();
-
-    if (serviceSelect) {
-      serviceSelect.addEventListener('change', setSubject);
-    }
-
     document.querySelectorAll('[data-service-choice]').forEach((choiceLink) => {
       choiceLink.addEventListener('click', () => {
         const service = choiceLink.getAttribute('data-service-choice');
         if (serviceSelect && service) {
           serviceSelect.value = service;
-          setSubject();
         }
       });
     });
 
     orderForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      setSubject();
       if (validateOrder()) {
         openWhatsAppOrder();
       }
     });
-
-    if (emailButton) {
-      emailButton.addEventListener('click', () => {
-        setSubject();
-        if (validateOrder()) {
-          openEmailOrder();
-        }
-      });
-    }
   }
 
 })();

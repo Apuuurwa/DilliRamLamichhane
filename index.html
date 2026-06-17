@@ -34,6 +34,10 @@
 
 <body class="index-page supplier-home">
 
+  <div class="scroll-progress" aria-hidden="true">
+    <span data-scroll-progress></span>
+  </div>
+
   <header id="header" class="header fixed-top">
 
     <div class="topbar d-flex align-items-center">
@@ -101,6 +105,10 @@
                 <span>Call Now</span>
               </a>
             </div>
+            <a href="#about" class="scroll-cue d-inline-flex align-items-center">
+              <span>View details</span>
+              <i class="bi bi-arrow-down-short" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -459,7 +467,7 @@
 
       <div class="container section-title" data-aos="fade-up">
         <h2>Book Or Purchase</h2>
-        <p>Send your order by WhatsApp or email, or call directly for urgent freezer availability.</p>
+        <p>Send your order by WhatsApp, or call directly for urgent freezer availability.</p>
       </div>
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -484,14 +492,6 @@
               </div>
 
               <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                <i class="bi bi-envelope flex-shrink-0" aria-hidden="true"></i>
-                <div>
-                  <h3>Email</h3>
-                  <p><a href="mailto:sales@manakamanagargasuppliers.com.np">sales@manakamanagargasuppliers.com.np</a></p>
-                </div>
-              </div>
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
                 <i class="bi bi-currency-rupee flex-shrink-0" aria-hidden="true"></i>
                 <div>
                   <h3>Pricing</h3>
@@ -514,7 +514,7 @@
                 </div>
 
                 <div class="col-md-6">
-                  <input type="email" class="form-control" name="email" placeholder="Email Address">
+                  <input type="email" class="form-control" name="email" placeholder="Email Address (optional)">
                 </div>
 
                 <div class="col-md-6">
@@ -551,21 +551,16 @@
 
                 <div class="col-md-12">
                   <textarea class="form-control" name="message" rows="6" placeholder="Extra details, preferred timing, landmark, or purchase notes"></textarea>
-                  <input type="hidden" name="subject" value="Website freezer order request">
                 </div>
 
                 <div class="col-md-12 text-center">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your order message is ready. Please press send in WhatsApp or email to complete the request.</div>
+                  <div class="sent-message">Your order message is ready. Please press send in WhatsApp to complete the request.</div>
 
                   <button type="submit" class="d-inline-flex align-items-center">
                     <i class="bi bi-whatsapp me-2" aria-hidden="true"></i>
                     <span>Send by WhatsApp</span>
-                  </button>
-                  <button type="button" class="order-email-button d-inline-flex align-items-center" data-order-email>
-                    <i class="bi bi-envelope me-2" aria-hidden="true"></i>
-                    <span>Send by Email</span>
                   </button>
                 </div>
 
@@ -639,6 +634,17 @@
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" aria-label="Scroll to top"><i class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
+
+  <div class="quick-actions" aria-label="Quick contact actions">
+    <a href="tel:+9779855061374" class="quick-action-call">
+      <i class="bi bi-telephone-outbound" aria-hidden="true"></i>
+      <span>Call</span>
+    </a>
+    <a href="#contact" class="quick-action-book">
+      <i class="bi bi-calendar2-check" aria-hidden="true"></i>
+      <span>Book</span>
+    </a>
+  </div>
 
   <!-- Preloader -->
   <div id="preloader"></div>
