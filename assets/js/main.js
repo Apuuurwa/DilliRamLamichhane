@@ -236,8 +236,61 @@
       'Delivery coordination': 'Price to be confirmed'
     };
     const serviceSelect = orderForm.querySelector('[name="product"]');
+    const urgencySelect = orderForm.querySelector('[name="urgency"]');
+    const rentalStartInput = orderForm.querySelector('[name="rental_start"]');
+    const rentalDetailFields = orderForm.querySelectorAll('[data-rental-detail]');
     const errorMessage = orderForm.querySelector('.error-message');
     const sentMessage = orderForm.querySelector('.sent-message');
+
+    const isRentalService = () => serviceSelect && serviceSelect.value === 'Rent dead body freezer';
+
+    const getTodayDateValue = () => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    const buildGoogleMapsUrl = (location) => {
+      const cleanLocation = (location || '').trim();
+
+      if (cleanLocation === '') {
+        return 'https://www.google.com/maps';
+      }
+
+      if (/^https?:\/\//i.test(cleanLocation)) {
+        return cleanLocation;
+      }
+
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cleanLocation)}`;
+    };
+
+    const updateRentalDetails = () => {
+      const showRentalDetails = isRentalService();
+
+      rentalDetailFields.forEach((fieldWrap) => {
+        fieldWrap.hidden = !showRentalDetails;
+
+        fieldWrap.querySelectorAll('input, select, textarea').forEach((field) => {
+          field.disabled = !showRentalDetails;
+
+          if (!showRentalDetails) {
+            field.value = '';
+          }
+        });
+      });
+
+      if (showRentalDetails) {
+        if (urgencySelect) {
+          urgencySelect.value = 'Urgent - today';
+        }
+
+        if (rentalStartInput) {
+          rentalStartInput.value = getTodayDateValue();
+        }
+      }
+    };
 
     const getFieldValue = (name) => {
       const field = orderForm.querySelector(`[name="${name}"]`);
@@ -271,32 +324,56 @@
       const service = getFieldValue('product');
       const serviceText = getSelectedText('product') || service || 'Not selected';
       const price = servicePrices[service] || 'To be confirmed';
-      const rentalStart = getFieldValue('rental_start') || 'Not provided';
-      const rentalDays = getFieldValue('rental_days') || 'Not provided';
-      const email = getFieldValue('email') || 'Not provided';
-      const extraDetails = getFieldValue('message') || 'None';
-
-      return [
-        'NEW FREEZER ORDER REQUEST',
-        '',
+      const rentalStart = getFieldValue('rental_start');
+      const rentalDays = getFieldValue('rental_days');
+      const location = getFieldValue('location');
+      const email = getFieldValue('email');
+      const extraDetails = getFieldValue('message');
+      const serviceDetails = [
         'SERVICE DETAILS',
         `Service        : ${serviceText}`,
-        `Expected price : ${price}`,
-        '',
+        `Expected price : ${price}`
+      ];
+      const customerDetails = [
         'CUSTOMER DETAILS',
         `Name           : ${getFieldValue('name')}`,
-        `Phone/WhatsApp : ${getFieldValue('phone')}`,
-        `Email          : ${email}`,
-        '',
+        `Phone/WhatsApp : ${getFieldValue('phone')}`
+      ];
+      const deliveryDetails = [
         'DELIVERY DETAILS',
-        `Location       : ${getFieldValue('location')}`,
-        `Urgency        : ${getFieldValue('urgency')}`,
-        `Required date  : ${rentalStart}`,
-        `Rental days    : ${rentalDays}`,
+        `Location       : ${location} - ${buildGoogleMapsUrl(location)}`,
+        `Urgency        : ${getFieldValue('urgency')}`
+      ];
+
+      if (email !== '') {
+        customerDetails.push(`Email          : ${email}`);
+      }
+
+      if (service === 'Rent dead body freezer') {
+        if (rentalStart !== '') {
+          deliveryDetails.push(`Rental start  : ${rentalStart}`);
+        }
+
+        if (rentalDays !== '') {
+          deliveryDetails.push(`Rental days   : ${rentalDays}`);
+        }
+      }
+
+      const orderDetails = [
+        'NEW FREEZER ORDER REQUEST',
         '',
-        'EXTRA DETAILS',
-        extraDetails
-      ].join('\n');
+        ...serviceDetails,
+        '',
+        ...customerDetails,
+        '',
+        ...deliveryDetails
+      ];
+
+      if (extraDetails !== '') {
+        orderDetails.push('', 'EXTRA DETAILS', extraDetails);
+      }
+
+      return orderDetails.join('\n');
     };
 
     const openWhatsAppOrder = () => {
@@ -311,9 +388,16 @@
         const service = choiceLink.getAttribute('data-service-choice');
         if (serviceSelect && service) {
           serviceSelect.value = service;
+          updateRentalDetails();
         }
       });
     });
+
+    if (serviceSelect) {
+      serviceSelect.addEventListener('change', updateRentalDetails);
+    }
+
+    updateRentalDetails();
 
     orderForm.addEventListener('submit', (event) => {
       event.preventDefault();

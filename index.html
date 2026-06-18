@@ -574,16 +574,16 @@
                   </select>
                 </div>
 
-                <div class="col-md-6">
-                  <input type="date" class="form-control" name="rental_start" aria-label="Required date">
+                <div class="col-md-6 rental-detail-field" data-rental-detail hidden>
+                  <input type="date" class="form-control" name="rental_start" aria-label="Rental start date" disabled>
                 </div>
 
-                <div class="col-md-6">
-                  <input type="number" class="form-control" name="rental_days" min="1" step="1" placeholder="Rental Days, if renting">
+                <div class="col-md-6 rental-detail-field" data-rental-detail hidden>
+                  <input type="number" class="form-control" name="rental_days" min="1" step="1" placeholder="Rental Days" disabled>
                 </div>
 
                 <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Extra details, preferred timing, landmark, or purchase notes"></textarea>
+                  <textarea class="form-control" name="message" rows="6" placeholder="Extra details (optional), preferred timing, landmark, or purchase notes"></textarea>
                 </div>
 
                 <div class="col-md-12 text-center">
