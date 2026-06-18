@@ -3091,7 +3091,7 @@ section,
 }
 
 .supplier-home .hero .btn-get-started:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   border-color: rgba(255, 255, 255, 0.48);
   color: var(--supplier-ink);
   box-shadow: 0 22px 46px rgba(217, 173, 79, 0.38);
@@ -3126,7 +3126,7 @@ section,
 }
 
 .supplier-home .hero .btn-watch-video:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   background: rgba(255, 255, 255, 0.16);
   border-color: rgba(246, 207, 115, 0.72);
   box-shadow: 0 18px 36px rgba(5, 28, 25, 0.3);
@@ -3477,7 +3477,7 @@ section,
 
 .supplier-home .price-action:hover {
   color: var(--supplier-ink);
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   border-color: rgba(217, 173, 79, 0.86);
   box-shadow: 0 22px 46px rgba(217, 173, 79, 0.34);
 }
@@ -3511,7 +3511,7 @@ section,
 }
 
 .supplier-home .call-to-action .cta-btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   color: var(--supplier-ink);
   border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 22px 46px rgba(217, 173, 79, 0.36);
@@ -3714,7 +3714,7 @@ section,
 
 .supplier-home .contact .php-email-form button[type=submit]:hover,
 .supplier-home .contact .php-email-form button[type=button]:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   background: linear-gradient(135deg, var(--supplier-teal), var(--supplier-green));
   box-shadow: 0 22px 46px rgba(0, 108, 91, 0.34);
 }
@@ -3747,7 +3747,7 @@ section,
 }
 
 .supplier-home .scroll-top:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   box-shadow: 0 18px 40px rgba(217, 173, 79, 0.42);
 }
 
@@ -3808,7 +3808,7 @@ section,
 }
 
 .supplier-home .quick-actions a:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   box-shadow: 0 18px 36px rgba(6, 60, 53, 0.18);
 }
 
