@@ -3305,8 +3305,13 @@ section,
 
 .proprietor-portrait-wrap {
   position: relative;
-  max-width: 460px;
+  max-width: 286px;
   margin: 0 auto;
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--surface-color);
+  border: 1px solid var(--supplier-line);
+  box-shadow: 0 18px 44px rgba(6, 60, 53, 0.12);
 }
 
 .proprietor-portrait {
@@ -3315,42 +3320,37 @@ section,
   object-fit: cover;
   object-position: center;
   border-radius: 8px;
-  border: 1px solid var(--supplier-line);
-  box-shadow: 0 24px 60px rgba(6, 60, 53, 0.16);
+  border: 1px solid color-mix(in srgb, var(--supplier-green), transparent 78%);
+  box-shadow: 0 12px 28px rgba(6, 60, 53, 0.12);
 }
 
 .proprietor-nameplate {
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: 18px;
-  padding: 16px 18px;
-  border-radius: 8px;
-  color: #ffffff;
-  background: rgba(7, 26, 24, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px);
+  padding: 14px 4px 2px;
+  text-align: center;
+  color: var(--default-color);
 }
 
 .proprietor-nameplate h3 {
-  color: #ffffff;
-  font-size: 20px;
+  color: var(--supplier-ink);
+  font-size: 18px;
   margin: 0 0 4px;
 }
 
 .proprietor-nameplate p {
-  color: rgba(255, 255, 255, 0.82);
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin: 0;
   font-weight: 600;
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .proprietor-copy {
-  padding: 38px;
+  padding: 30px 34px;
   border-radius: 8px;
   background: var(--surface-color);
   border: 1px solid var(--supplier-line);
   border-left: 5px solid var(--supplier-gold);
-  box-shadow: 0 18px 46px rgba(6, 60, 53, 0.1);
+  box-shadow: 0 16px 40px rgba(6, 60, 53, 0.09);
 }
 
 .section-kicker {
@@ -3368,9 +3368,9 @@ section,
 }
 
 .proprietor-copy h2 {
-  font-size: 34px;
+  font-size: 28px;
   line-height: 1.25;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .proprietor-copy blockquote {
@@ -3381,9 +3381,9 @@ section,
 
 .proprietor-copy blockquote p {
   color: color-mix(in srgb, var(--default-color), transparent 18%);
-  font-size: 17px;
-  line-height: 1.8;
-  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 1.72;
+  margin-bottom: 14px;
 }
 
 .proprietor-copy blockquote p:last-child {
@@ -3394,8 +3394,8 @@ section,
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 24px;
-  padding-top: 20px;
+  margin-top: 20px;
+  padding-top: 18px;
   border-top: 1px solid var(--supplier-line);
   color: var(--supplier-green);
   font-weight: 800;
@@ -4028,7 +4028,7 @@ section,
   }
 
   .proprietor-copy h2 {
-    font-size: 30px;
+    font-size: 27px;
   }
 }
 
@@ -4148,14 +4148,11 @@ section,
   }
 
   .proprietor-nameplate {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
     padding: 14px;
   }
 
   .proprietor-nameplate h3 {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .proprietor-signature {
