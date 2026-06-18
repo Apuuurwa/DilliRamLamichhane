@@ -229,6 +229,14 @@
 
   if (orderForm) {
     const businessWhatsAppNumber = '9779855061374';
+    const serviceQueryMap = {
+      rent: 'Rent dead body freezer',
+      rental: 'Rent dead body freezer',
+      purchase: 'Purchase dead body freezer',
+      buy: 'Purchase dead body freezer',
+      urgent: 'Urgent availability check',
+      delivery: 'Delivery coordination'
+    };
     const servicePrices = {
       'Rent dead body freezer': 'NPR 5,000 per day',
       'Purchase dead body freezer': 'NPR 375,000',
@@ -376,6 +384,24 @@
       return orderDetails.join('\n');
     };
 
+    const applyServiceFromUrl = () => {
+      if (!serviceSelect) return;
+      const params = new URLSearchParams(window.location.search);
+      const requestedService = params.get('service') || params.get('product');
+
+      if (!requestedService) return;
+
+      const normalizedService = requestedService.toLowerCase();
+      const serviceValue = serviceQueryMap[normalizedService] || requestedService;
+      const matchingOption = Array.from(serviceSelect.options).find((option) => {
+        return option.value === serviceValue || option.value.toLowerCase() === serviceValue.toLowerCase();
+      });
+
+      if (matchingOption) {
+        serviceSelect.value = matchingOption.value;
+      }
+    };
+
     const openWhatsAppOrder = () => {
       const orderText = encodeURIComponent(buildOrderText());
       const url = `https://wa.me/${businessWhatsAppNumber}?text=${orderText}`;
@@ -397,6 +423,7 @@
       serviceSelect.addEventListener('change', updateRentalDetails);
     }
 
+    applyServiceFromUrl();
     updateRentalDetails();
 
     orderForm.addEventListener('submit', (event) => {
