@@ -2868,8 +2868,9 @@ section,
   --supplier-mint: #edf8f4;
   --supplier-porcelain: #f7fbfa;
   --supplier-line: color-mix(in srgb, var(--default-color), transparent 88%);
-  --supplier-shadow: 0 18px 55px rgba(6, 60, 53, 0.16);
-  background: var(--supplier-porcelain);
+  --supplier-shadow: 0 22px 64px rgba(6, 60, 53, 0.15);
+  --supplier-premium-shadow: 0 26px 70px rgba(6, 60, 53, 0.14), 0 1px 0 rgba(255, 255, 255, 0.82) inset;
+  background: #f3faf7;
   overflow-x: hidden;
 }
 
@@ -2894,15 +2895,80 @@ section,
 
 .supplier-home .main {
   background:
-    linear-gradient(180deg, rgba(247, 251, 250, 0) 0%, rgba(247, 251, 250, 0.82) 46%, rgba(237, 248, 244, 0.68) 100%);
+    repeating-linear-gradient(135deg, rgba(0, 108, 91, 0.035) 0 1px, transparent 1px 26px),
+    linear-gradient(180deg, rgba(247, 251, 250, 0) 0%, rgba(247, 251, 250, 0.92) 36%, rgba(237, 248, 244, 0.86) 100%);
 }
 
 .supplier-home .section {
   position: relative;
+  isolation: isolate;
+}
+
+.supplier-home .section:not(.supplier-hero):not(.dark-background) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(242, 250, 247, 0.92) 100%);
 }
 
 .supplier-home .light-background {
-  background: linear-gradient(180deg, #f7fbfa 0%, #eef8f4 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(238, 248, 244, 0.94) 100%);
+}
+
+.supplier-home .section:not(.supplier-hero)>.container {
+  position: relative;
+  z-index: 2;
+}
+
+.supplier-home .section:not(.supplier-hero):before,
+.supplier-home .section:not(.supplier-hero):after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 48% 52% 45% 55%;
+  opacity: 0.68;
+  mask-image: linear-gradient(135deg, transparent 0%, #000 18%, #000 72%, transparent 100%);
+}
+
+.supplier-home .section:not(.supplier-hero):before {
+  width: 520px;
+  height: 520px;
+  top: 32px;
+  right: -190px;
+  background:
+    repeating-radial-gradient(ellipse at center, transparent 0 27px, rgba(0, 108, 91, 0.16) 28px 29px, transparent 30px 56px),
+    repeating-radial-gradient(ellipse at center, transparent 0 44px, rgba(217, 173, 79, 0.14) 45px 46px, transparent 47px 86px);
+  transform: rotate(-17deg);
+}
+
+.supplier-home .section:not(.supplier-hero):after {
+  width: 430px;
+  height: 430px;
+  left: -185px;
+  bottom: -180px;
+  background:
+    repeating-radial-gradient(ellipse at center, transparent 0 30px, rgba(186, 77, 62, 0.14) 31px 32px, transparent 33px 62px),
+    repeating-radial-gradient(ellipse at center, transparent 0 52px, rgba(18, 139, 120, 0.12) 53px 54px, transparent 55px 96px);
+  transform: rotate(21deg);
+}
+
+.supplier-home #pricing:before,
+.supplier-home #faq:before {
+  left: -210px;
+  right: auto;
+  transform: rotate(15deg);
+}
+
+.supplier-home #features:after,
+.supplier-home #contact:after {
+  right: -190px;
+  left: auto;
+  transform: rotate(-24deg);
+}
+
+.supplier-home .call-to-action:before,
+.supplier-home .call-to-action:after {
+  opacity: 0.32;
 }
 
 .supplier-home .section-title {
@@ -3412,6 +3478,55 @@ section,
   color: var(--supplier-ink);
   background: linear-gradient(135deg, var(--supplier-gold), var(--supplier-gold-bright));
   font-size: 24px;
+}
+
+.supplier-home .trust-strip .trust-item,
+.supplier-home .proprietor-portrait-wrap,
+.supplier-home .proprietor-copy,
+.supplier-home .product-card,
+.supplier-home .services .service-item,
+.supplier-home .process .process-step,
+.supplier-home .faq .faq-container .faq-item,
+.supplier-home .contact .php-email-form {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 253, 252, 0.96) 58%, rgba(237, 248, 244, 0.72) 100%);
+  border-color: rgba(6, 60, 53, 0.12);
+  box-shadow: var(--supplier-premium-shadow);
+}
+
+.supplier-home .trust-strip .trust-item:before,
+.supplier-home .proprietor-portrait-wrap:before,
+.supplier-home .proprietor-copy:before,
+.supplier-home .product-card:before,
+.supplier-home .services .service-item:before,
+.supplier-home .process .process-step:before,
+.supplier-home .faq .faq-container .faq-item:before,
+.supplier-home .contact .php-email-form:before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--supplier-green), var(--supplier-gold), var(--supplier-rust));
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.supplier-home .price-card {
+  background:
+    linear-gradient(145deg, #ffffff 0%, rgba(247, 251, 250, 0.98) 56%, rgba(255, 244, 221, 0.76) 100%);
+}
+
+.supplier-home .proprietor-copy {
+  border-left-color: var(--supplier-gold);
+}
+
+.supplier-home .services .service-item .icon,
+.supplier-home .product-card .product-icon,
+.process .process-step span,
+.trust-strip .trust-item i {
+  box-shadow: 0 10px 24px rgba(6, 60, 53, 0.08);
 }
 
 .supplier-home .stats .stats-item {
@@ -4057,6 +4172,20 @@ section,
   .process .process-step,
   .supplier-home .services .service-item {
     padding: 26px;
+  }
+
+  .supplier-home .section:not(.supplier-hero):before {
+    width: 320px;
+    height: 320px;
+    right: -180px;
+    opacity: 0.42;
+  }
+
+  .supplier-home .section:not(.supplier-hero):after {
+    width: 280px;
+    height: 280px;
+    left: -170px;
+    opacity: 0.34;
   }
 }
 
