@@ -3026,6 +3026,19 @@ section,
   min-width: 0;
 }
 
+.supplier-home .header .logo .brand-logo {
+  width: 52px;
+  height: 52px;
+  max-height: none;
+  flex: 0 0 52px;
+  margin-right: 0;
+  padding: 4px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(6, 60, 53, 0.14);
+}
+
 .supplier-home .header .logo .logo-symbol {
   width: 40px;
   height: 40px;
@@ -3958,6 +3971,19 @@ section,
   gap: 8px;
 }
 
+.supplier-home .footer .footer-about .logo .brand-logo {
+  width: 56px;
+  height: 56px;
+  max-height: none;
+  flex: 0 0 56px;
+  margin-right: 0;
+  padding: 5px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(2, 27, 25, 0.22);
+}
+
 .supplier-home .footer .footer-about .logo i {
   font-size: 24px;
   color: var(--supplier-gold);
@@ -4148,6 +4174,13 @@ section,
 }
 
 @media (max-width: 767px) {
+  .supplier-home .header .logo .brand-logo {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+    padding: 3px;
+  }
+
   .supplier-home .header .logo .logo-symbol {
     width: 36px;
     height: 36px;
@@ -4205,6 +4238,12 @@ section,
   .supplier-home .header .logo h1 {
     max-width: 210px;
     font-size: 17px;
+  }
+
+  .supplier-home .header .logo .brand-logo {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
   }
 
   .supplier-home .hero.supplier-hero {
